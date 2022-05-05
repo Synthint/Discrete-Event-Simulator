@@ -179,6 +179,7 @@ public class App {
 		   
 	public static int getInputInt(String prompt,int min,int max) {
 		System.out.print("\n\n"+prompt+" >>> ");
+		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
 		int input = scan.nextInt();
 		if(input < min || input > max) {
@@ -189,6 +190,7 @@ public class App {
 	
 	public static String getInputString(String prompt) {
 		System.out.print("\n\n"+prompt+" >>> ");
+		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
 		String input = scan.nextLine();
 		if(!input.matches("[A-Za-z0-9]*")) {
