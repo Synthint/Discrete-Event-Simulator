@@ -13,7 +13,7 @@ public class App {
 				+ " \n (note: each process set is simulated 4 times, once for each CPU scheduling algorithm)", 1, 25);
 		int processesPerSet = getInputInt("Number of processes per set between 1 and 50?",1,50);
 		int poissonMean = getInputInt("This simulator gives processes different arrival times based on the Poisson distribution,"
-				+ "\n what is the mean arrival time between 5 and 100",5,100);
+				+ "\n what is the mean arrival time between 3 and 100",3,100);
 		int maxBurst = getInputInt("max burst time per process between 5 and 50?",5,50);
 		int roundRobinQuantum = getInputInt("round robin requires a time quantum for simulation, what is the time quantum 1 and 25?",1,25);
 		

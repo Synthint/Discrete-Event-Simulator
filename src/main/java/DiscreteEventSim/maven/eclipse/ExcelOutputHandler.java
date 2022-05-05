@@ -23,6 +23,7 @@ public class ExcelOutputHandler {
 	Sheet turnaround = timeRecords.createSheet("Turnaround Time Analysis");
 	Sheet  response = timeRecords.createSheet("Response Time Analysis");
 	Sheet  waiting = timeRecords.createSheet("Waiting Time Analysis");
+	Sheet arrival = timeRecords.createSheet("Arrrival Time");
 	
 	public ExcelOutputHandler() {}
 	
@@ -69,12 +70,15 @@ public void recordBatchOutputs(Process[][] processInfo) {
 		Row labelTurn =  turnaround.createRow(0);
 		Row labelResp =  response  .createRow(0);
 		Row labelWait =  waiting   .createRow(0);
+		Row labelAriv =  arrival   .createRow(0);
 		
 		for(int i=0;i<labels.length;i++) {
-			labelComp.createCell(i).setCellValue(labels[i]);
-			labelTurn.createCell(i).setCellValue(labels[i]);
-			labelResp.createCell(i).setCellValue(labels[i]);
-			labelWait.createCell(i).setCellValue(labels[i]);
+			String label = labels[i]+" - Process "+(i%processInfo.length);
+			labelComp.createCell(i).setCellValue(label);
+			labelTurn.createCell(i).setCellValue(label);
+			labelResp.createCell(i).setCellValue(label);
+			labelWait.createCell(i).setCellValue(label);
+			labelAriv.createCell(i).setCellValue(label);
 		}
 		
 		
@@ -83,11 +87,13 @@ public void recordBatchOutputs(Process[][] processInfo) {
 			Row rowTurn =  turnaround.createRow(x);
 			Row rowResp =  response  .createRow(x);
 			Row rowWait =  waiting   .createRow(x);
+			Row rowAriv =  waiting   .createRow(x);
 			for(int i =0; i<transposedInfo[x-1].length;i++) {
 				rowComp.createCell(i).setCellValue(transposedInfo[x-1][i].getCompletionTime());
 				rowTurn.createCell(i).setCellValue(transposedInfo[x-1][i].getTurnaroundTime());
 				rowResp.createCell(i).setCellValue(transposedInfo[x-1][i].getResponseTime());
 				rowWait.createCell(i).setCellValue(transposedInfo[x-1][i].getWaitingTime());
+				rowAriv.createCell(i).setCellValue(transposedInfo[x-1][i].getArrival());
 			
 			}
 		}
@@ -108,18 +114,22 @@ public void recordBatchOutputs(Process[][] processInfo) {
 		Row labelTurn =  turnaround.createRow(0);
 		Row labelResp =  response  .createRow(0);
 		Row labelWait =  waiting   .createRow(0);
+		Row labelAriv =  arrival   .createRow(0);
 		
 		labelComp.createCell(0).setCellValue("Process ID");
 		labelTurn.createCell(0).setCellValue("Process ID");
 		labelResp.createCell(0).setCellValue("Process ID");
 		labelWait.createCell(0).setCellValue("Process ID");
+		labelAriv.createCell(0).setCellValue("Process ID");
 		
 		for(int i=0;i<labels.length;i++) {
 			offset = (int)(i/setSize)+1;
-			labelComp.createCell(i+offset+1).setCellValue(labels[i]);
-			labelTurn.createCell(i+offset+1).setCellValue(labels[i]);
-			labelResp.createCell(i+offset+1).setCellValue(labels[i]);
-			labelWait.createCell(i+offset+1).setCellValue(labels[i]);
+			String label = labels[i]+" - Process Set"+(i%processInfo.length);
+			labelComp.createCell(i+offset+1).setCellValue(label);
+			labelTurn.createCell(i+offset+1).setCellValue(label);
+			labelResp.createCell(i+offset+1).setCellValue(label);
+			labelWait.createCell(i+offset+1).setCellValue(label);
+			labelAriv.createCell(i+offset+1).setCellValue(label);
 		}
 		
 		
@@ -128,17 +138,21 @@ public void recordBatchOutputs(Process[][] processInfo) {
 			Row rowTurn =  turnaround.createRow(x);
 			Row rowResp =  response  .createRow(x);
 			Row rowWait =  waiting   .createRow(x);
+			Row rowAriv =  arrival   .createRow(x);
 			
 			rowComp.createCell(0).setCellValue(x-1);
 			rowTurn.createCell(0).setCellValue(x-1);
 			rowResp.createCell(0).setCellValue(x-1);
 			rowWait.createCell(0).setCellValue(x-1);
+			rowAriv.createCell(0).setCellValue(x-1);
+			
 			for(int i =0; i<transposedInfo[x-1].length;i++) {
 				offset = (int)(i/setSize)+1;
 				rowComp.createCell(i+offset+1).setCellValue(transposedInfo[x-1][i].getCompletionTime());
 				rowTurn.createCell(i+offset+1).setCellValue(transposedInfo[x-1][i].getTurnaroundTime());
 				rowResp.createCell(i+offset+1).setCellValue(transposedInfo[x-1][i].getResponseTime());
 				rowWait.createCell(i+offset+1).setCellValue(transposedInfo[x-1][i].getWaitingTime());
+				rowAriv.createCell(i+offset+1).setCellValue(transposedInfo[x-1][i].getArrival());
 			
 			}
 		}
