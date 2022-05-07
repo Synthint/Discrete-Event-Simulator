@@ -124,7 +124,7 @@ public void recordBatchOutputs(Process[][] processInfo) {
 		
 		for(int i=0;i<labels.length;i++) {
 			offset = (int)(i/setSize)+1;
-			String label = labels[i]+" - Process Set"+(i%processInfo.length);
+			String label = labels[i]+" - Process Set"+(i%setSize);
 			labelComp.createCell(i+offset+1).setCellValue(label);
 			labelTurn.createCell(i+offset+1).setCellValue(label);
 			labelResp.createCell(i+offset+1).setCellValue(label);
@@ -132,6 +132,7 @@ public void recordBatchOutputs(Process[][] processInfo) {
 			labelAriv.createCell(i+offset+1).setCellValue(label);
 		}
 		
+		int rowNum = 0;
 		
 		for(int x=1;x<=transposedInfo.length;x++) {
 			Row rowComp =  completion.createRow(x);
@@ -155,8 +156,89 @@ public void recordBatchOutputs(Process[][] processInfo) {
 				rowAriv.createCell(i+offset+1).setCellValue(transposedInfo[x-1][i].getArrival());
 			
 			}
+			rowNum = x;
 		}
+		
+		
+		rowNum+=2;
+
+		Row rowComp =  completion.createRow(rowNum);
+		Row rowTurn =  turnaround.createRow(rowNum);
+		Row rowResp =  response  .createRow(rowNum);
+		Row rowWait =  waiting   .createRow(rowNum);
+		
+		Row rowComp2 =  completion.createRow(rowNum+1);
+		Row rowTurn2 =  turnaround.createRow(rowNum+1);
+		Row rowResp2 =  response  .createRow(rowNum+1);
+		Row rowWait2 =  waiting   .createRow(rowNum+1);
+		
+		rowComp.createCell(0).setCellValue("Set AVG");
+		rowTurn.createCell(0).setCellValue("Set AVG");
+		rowResp.createCell(0).setCellValue("Set AVG");
+		rowWait.createCell(0).setCellValue("Set AVG");
+		
+		rowComp2.createCell(0).setCellValue("Algo AVG");
+		rowTurn2.createCell(0).setCellValue("Algo AVG");
+		rowResp2.createCell(0).setCellValue("Algo AVG");
+		rowWait2.createCell(0).setCellValue("Algo AVG");
+		
+		for(int x=0;x<setSize;x++) {
+			int set0Loc = 2+x;
+			int set1Loc = 3+x+(setSize*1);
+			int set2Loc = 4+x+(setSize*2);
+			int set3Loc = 5+x+(setSize*3);
+			rowComp.createCell(set0Loc).setCellFormula("AVERAGE("+getExcelColumn(set0Loc)+"2:"+getExcelColumn(set0Loc)+""+(setSize+1)+")");
+			rowComp.createCell(set1Loc).setCellFormula("AVERAGE("+getExcelColumn(set1Loc)+"2:"+getExcelColumn(set1Loc)+""+(setSize+1)+")");
+			rowComp.createCell(set2Loc).setCellFormula("AVERAGE("+getExcelColumn(set2Loc)+"2:"+getExcelColumn(set2Loc)+""+(setSize+1)+")");
+			rowComp.createCell(set3Loc).setCellFormula("AVERAGE("+getExcelColumn(set3Loc)+"2:"+getExcelColumn(set3Loc)+""+(setSize+1)+")");
+			
+			rowTurn.createCell(set0Loc).setCellFormula("AVERAGE("+getExcelColumn(set0Loc)+"2:"+getExcelColumn(set0Loc)+""+(setSize+1)+")");
+			rowTurn.createCell(set1Loc).setCellFormula("AVERAGE("+getExcelColumn(set1Loc)+"2:"+getExcelColumn(set1Loc)+""+(setSize+1)+")");
+			rowTurn.createCell(set2Loc).setCellFormula("AVERAGE("+getExcelColumn(set2Loc)+"2:"+getExcelColumn(set2Loc)+""+(setSize+1)+")");
+			rowTurn.createCell(set3Loc).setCellFormula("AVERAGE("+getExcelColumn(set3Loc)+"2:"+getExcelColumn(set3Loc)+""+(setSize+1)+")");
+			
+			rowResp.createCell(set0Loc).setCellFormula("AVERAGE("+getExcelColumn(set0Loc)+"2:"+getExcelColumn(set0Loc)+""+(setSize+1)+")");
+			rowResp.createCell(set1Loc).setCellFormula("AVERAGE("+getExcelColumn(set1Loc)+"2:"+getExcelColumn(set1Loc)+""+(setSize+1)+")");
+			rowResp.createCell(set2Loc).setCellFormula("AVERAGE("+getExcelColumn(set2Loc)+"2:"+getExcelColumn(set2Loc)+""+(setSize+1)+")");
+			rowResp.createCell(set3Loc).setCellFormula("AVERAGE("+getExcelColumn(set3Loc)+"2:"+getExcelColumn(set3Loc)+""+(setSize+1)+")");
+			
+			rowWait.createCell(set0Loc).setCellFormula("AVERAGE("+getExcelColumn(set0Loc)+"2:"+getExcelColumn(set0Loc)+""+(setSize+1)+")");
+			rowWait.createCell(set1Loc).setCellFormula("AVERAGE("+getExcelColumn(set1Loc)+"2:"+getExcelColumn(set1Loc)+""+(setSize+1)+")");
+			rowWait.createCell(set2Loc).setCellFormula("AVERAGE("+getExcelColumn(set2Loc)+"2:"+getExcelColumn(set2Loc)+""+(setSize+1)+")");
+			rowWait.createCell(set3Loc).setCellFormula("AVERAGE("+getExcelColumn(set3Loc)+"2:"+getExcelColumn(set3Loc)+""+(setSize+1)+")");
+			
+			if(x==setSize-1) {
+				rowNum++;
+				rowComp2.createCell(set0Loc).setCellFormula("AVERAGE("+getExcelColumn(set0Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set0Loc)+""+rowNum+")");
+				rowComp2.createCell(set1Loc).setCellFormula("AVERAGE("+getExcelColumn(set1Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set1Loc)+""+rowNum+")");
+				rowComp2.createCell(set2Loc).setCellFormula("AVERAGE("+getExcelColumn(set2Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set2Loc)+""+rowNum+")");
+				rowComp2.createCell(set3Loc).setCellFormula("AVERAGE("+getExcelColumn(set3Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set3Loc)+""+rowNum+")");
+				
+				rowTurn2.createCell(set0Loc).setCellFormula("AVERAGE("+getExcelColumn(set0Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set0Loc)+""+rowNum+")");
+				rowTurn2.createCell(set1Loc).setCellFormula("AVERAGE("+getExcelColumn(set1Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set1Loc)+""+rowNum+")");
+				rowTurn2.createCell(set2Loc).setCellFormula("AVERAGE("+getExcelColumn(set2Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set2Loc)+""+rowNum+")");
+				rowTurn2.createCell(set3Loc).setCellFormula("AVERAGE("+getExcelColumn(set3Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set3Loc)+""+rowNum+")");
+				
+				rowResp2.createCell(set0Loc).setCellFormula("AVERAGE("+getExcelColumn(set0Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set0Loc)+""+rowNum+")");
+				rowResp2.createCell(set1Loc).setCellFormula("AVERAGE("+getExcelColumn(set1Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set1Loc)+""+rowNum+")");
+				rowResp2.createCell(set2Loc).setCellFormula("AVERAGE("+getExcelColumn(set2Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set2Loc)+""+rowNum+")");
+				rowResp2.createCell(set3Loc).setCellFormula("AVERAGE("+getExcelColumn(set3Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set3Loc)+""+rowNum+")");
+				
+				rowWait2.createCell(set0Loc).setCellFormula("AVERAGE("+getExcelColumn(set0Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set0Loc)+""+rowNum+")");
+				rowWait2.createCell(set1Loc).setCellFormula("AVERAGE("+getExcelColumn(set1Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set1Loc)+""+rowNum+")");
+				rowWait2.createCell(set2Loc).setCellFormula("AVERAGE("+getExcelColumn(set2Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set2Loc)+""+rowNum+")");
+				rowWait2.createCell(set3Loc).setCellFormula("AVERAGE("+getExcelColumn(set3Loc-(setSize-1))+""+rowNum+":"+getExcelColumn(set3Loc)+""+rowNum+")");
+			}
+			
+		}
+		
+		
+		
+		
 	}
+	
+	
+	
 	
 	
 	public void saveToFile(String file) {
@@ -176,7 +258,19 @@ public void recordBatchOutputs(Process[][] processInfo) {
 		
 	}
 	
-	
+	private String getExcelColumn(int columnNumber){
+		columnNumber++;
+	    String columnName = "";
+
+	    while (columnNumber > 0)
+	    {
+	        int modulo = (columnNumber - 1) % 26;
+	        columnName = (char)('A' + modulo) + columnName;
+	        columnNumber = (columnNumber - modulo) / 26;
+	    } 
+
+	    return columnName;
+	}
 	
 		
 }

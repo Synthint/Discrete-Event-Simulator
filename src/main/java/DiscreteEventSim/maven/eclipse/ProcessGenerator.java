@@ -15,7 +15,6 @@ public class ProcessGenerator {
 			int arrival = pd.sample();
 			int burst = (int)((maxBurst-1)*rnd.nextDouble())+1;
 			procs[i] = new Process((char)(i),burst,arrival);
-			//System.out.println(procs[i]);
 		}
 		
 		Process.writeProcessesToFile(file, procs);
@@ -31,7 +30,6 @@ public class ProcessGenerator {
 			int arrival = (int)(pd.sample()*10);
 			int burst = (int)((maxBurst-1)*rnd.nextDouble())+1;
 			procs[i] = new Process((char)(i),burst,arrival);
-			//System.out.println(procs[i]);
 		}
 		
 		Process.writeProcessesToFile(file, procs);
